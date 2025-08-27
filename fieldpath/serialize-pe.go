@@ -117,14 +117,14 @@ func serializePathElementBuilder(pe PathElement, builder *bytes.Buffer) error {
 		if _, err := builder.Write(peKeySepBytes); err != nil {
 			return err
 		}
-		if err := json.MarshalWrite(builder, pe.Key, json.Deterministic(true)); err != nil {
+		if err := json.MarshalWrite(builder, pe.Key); err != nil {
 			return err
 		}
 	case pe.Value != nil:
 		if _, err := builder.Write(peValueSepBytes); err != nil {
 			return err
 		}
-		if err := json.MarshalWrite(builder, (*pe.Value).Unstructured(), json.Deterministic(true)); err != nil {
+		if err := json.MarshalWrite(builder, value.MarshalValue{Value: pe.Value}); err != nil {
 			return err
 		}
 	case pe.Index != nil:
